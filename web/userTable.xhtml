@@ -13,9 +13,25 @@
         <p>
             <h2>UserTable</h2>
         </p>
+        <h:form id="addEntity">
+            <p:panelGrid columns="2">
+
+                <h:outputLabel for="id" value="ID: " />
+                <p:inputText  value="#{databaseController.userDao.newEntity.id}"/>
+                <h:outputLabel for="name" value="Name: " />
+                <p:inputText value="#{databaseController.userDao.newEntity.name}"/>
+                <h:outputLabel for="visible" value="Visible: " />
+                <p:selectBooleanCheckbox value="#{databaseController.userDao.newEntity.visible}"/>
+                <h:outputLabel for="test" value="test: " />
+                <p:calendar value="#{databaseController.userDao.newEntity.test}"/>
+                <f:facet name="footer">
+                    <h:commandButton value="Add Item" action="#{databaseController.userDao.persistNewEntity()}"/>
+                </f:facet>
+            </p:panelGrid>
+        </h:form>
         <h:form id="form">   
             <p:growl id="msgs" showDetail="true"/>
-            
+
             <p:dataTable value="#{databaseController.userDao.all}" var="roww" editable="true" tableStyle="table-layout:auto">
                 <p:ajax event="rowEditCancel" listener="#{databaseController.onRowCancel}" update=":form:msgs" />
                 <p:ajax event="rowEdit"       listener="#{databaseController.onRowEdit}" update=":form:msgs" />
@@ -32,7 +48,7 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                
+
                 <p:column styleClass="ui-editable-column">
                     <f:facet name="header">
                         Name : VARCHAR
@@ -46,7 +62,7 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                
+
                 <p:column styleClass="ui-editable-column">
                     <f:facet name="header">
                         visible : BOOLEAN
@@ -60,7 +76,7 @@
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                
+
                 <p:column styleClass="ui-editable-column">
                     <f:facet name="header">
                         test : DATE
@@ -70,11 +86,15 @@
                             <h:outputText value="#{roww.test}" />
                         </f:facet>
                         <f:facet name="input">
-                            <p:inputText value="#{roww.test}" />
+                            <!--<p:inputText value="#{roww.test}" />-->
+                            <p:calendar value="#{roww.test}"
+                                        id="vendorStartDateInputTxt" pattern="dd/MM/yyyy" mode="popup" showOn="button">
+                                <f:convertDateTime type="date"  dateStyle="short" pattern="dd/MM/yyyy" />
+                            </p:calendar>
                         </f:facet>
                     </p:cellEditor>
                 </p:column>
-                   
+
                 <p:column headerText="Options" style="width:50px">
                     <p:rowEditor />
                 </p:column>

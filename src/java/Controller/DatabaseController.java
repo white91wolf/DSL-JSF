@@ -8,6 +8,7 @@ package Controller;
 
 import dataAccess.impl.RoleDAO;
 import dataAccess.impl.UserDAO;
+import entities.User;
 import java.io.Serializable;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
@@ -65,6 +66,10 @@ public class DatabaseController implements Serializable{
     public void onRowEdit(RowEditEvent event){
         FacesMessage msg = new FacesMessage("Eintrag geändert", (event.getObject()).toString());
         FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+        if(event.getObject().getClass().equals(userDao.getNewEntity().getClass())) {
+            userDao.update((User)event.getObject());
+        }
     }
     
     public void onRowCancel(RowEditEvent event) {
