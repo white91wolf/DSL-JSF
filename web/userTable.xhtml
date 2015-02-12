@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Bearbeite Tabelle</title>
+    </h:head>
+    <h:body>
+        <p>
+            <h2>UserTable</h2>
+        </p>
+        <h:form id="form">   
+            <p:growl id="msgs" showDetail="true"/>
+            
+            <p:dataTable value="#{databaseController.userDao.all}" var="roww" editable="true" tableStyle="table-layout:auto">
+                <p:ajax event="rowEditCancel" listener="#{databaseController.onRowCancel}" update=":form:msgs" />
+                <p:ajax event="rowEdit"       listener="#{databaseController.onRowEdit}" update=":form:msgs" />
+                <p:column styleClass="ui-editable-column">
+                    <f:facet name="header">
+                        ID : Double
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{roww.id}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{roww.id}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column styleClass="ui-editable-column">
+                    <f:facet name="header">
+                        Name : VARCHAR
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{roww.name}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{roww.name}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column styleClass="ui-editable-column">
+                    <f:facet name="header">
+                        visible : BOOLEAN
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{roww.visible}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{roww.visible}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                
+                <p:column styleClass="ui-editable-column">
+                    <f:facet name="header">
+                        test : DATE
+                    </f:facet>
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{roww.test}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <p:inputText value="#{roww.test}" />
+                        </f:facet>
+                    </p:cellEditor>
+                </p:column>
+                   
+                <p:column headerText="Options" style="width:50px">
+                    <p:rowEditor />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
